@@ -31,9 +31,9 @@ public class HeatMap {
         Window window = new Window("Heat Map", heatMapUI);
         window.setVisible(true);
 
-        TemperatureSensors.createSensors().forEach((id, observable) -> {
-            observable.map(temp -> getColorFromTemp(temp)).distinctUntilChanged().subscribe(color -> {
-                heatMapUI.setColor(new Long(id / 10).intValue(), new Long(id % 10).intValue(), color);
+        TemperatureSensors.getSensors().subscribe(sensor -> {
+            sensor.getSensor().map(temp -> getColorFromTemp(temp)).distinctUntilChanged().subscribe(color -> {
+                heatMapUI.setColor(new Long(sensor.getId() / 10).intValue(), new Long(sensor.getId() % 10).intValue(), color);
             });
         });
     }

@@ -47,6 +47,12 @@ public class FireAlarmUI extends JPanel {
         if (onFire) {
             g2d.setColor(Color.RED);
             g2d.fillPolygon(FIRE);
+            g2d.scale(.7, .7);
+            g2d.translate(10, 7);
+            g2d.setColor(Color.YELLOW);
+            g2d.fillPolygon(FIRE);
+            g2d.scale(1, 1);
+            g2d.translate(-10, -7);
         }
         g2d.translate(-x, -y);
     }

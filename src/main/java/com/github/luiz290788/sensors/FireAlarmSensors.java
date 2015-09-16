@@ -6,6 +6,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import rx.Observable;
 import rx.Subscriber;
+import rx.observables.ConnectableObservable;
 import rx.schedulers.Schedulers;
 
 public class FireAlarmSensors {
@@ -37,7 +38,7 @@ public class FireAlarmSensors {
     }
 
     private static Observable<Boolean> getSensorObservable(String label) {
-        return Observable.<Boolean> create(subscriber -> {
+        ConnectableObservable<Boolean> observable = Observable.<Boolean> create(subscriber -> {
             try (Jedis jedis = new Jedis("localhost")) {
                 String channel = "fire-alarm-" + label;
                 jedis.subscribe(new JedisPubSub() {
@@ -57,7 +58,11 @@ public class FireAlarmSensors {
                 subscriber.onError(e);
             }
             subscriber.onCompleted();
-        }).subscribeOn(Schedulers.io()).cache();
+        }).subscribeOn(Schedulers.io()).publish();
+
+        observable.connect();
+
+        return observable;
     }
 
     public static final class HouseSensor {
