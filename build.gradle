@@ -15,5 +15,15 @@ dependencies {
  
     // javarx
     compile 'io.reactivex:rxjava:1.0.14'
+    
+    // junit
+    testCompile 'junit:junit:4.12'
+    
+    // retrofit
+	compile 'com.squareup.retrofit:retrofit:1.9.0'
+	compile 'com.squareup.okhttp:okhttp:2.4.0'
+	
+	// jsoup
+	compile 'org.jsoup:jsoup:1.8.3'
 
 }
